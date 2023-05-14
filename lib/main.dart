@@ -79,33 +79,54 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
   }
 }
 
-class RestaurantList extends StatelessWidget {
+class RestaurantList extends StatefulWidget {
   const RestaurantList({
     super.key,
   });
 
   @override
+  State<StatefulWidget> createState() => _RestaurantListState();
+}
+
+class _RestaurantListState extends State<RestaurantList> {
+
+  var restaurantList = [];
+
+  Future<String> loadJsonData() async {
+    var jsonText = await rootBundle.loadString('assets/resto.json');
+    var jsonDecoded = json.decode(jsonText);
+    restaurantList = jsonDecoded["restaurants"] as List;
+    setState(() => restaurantList);
+    return 'success';
+  }
+
+  @override
   Widget build(BuildContext context) {
+    loadJsonData();
     return Expanded(
         child: Container(
-      alignment: Alignment.centerLeft,
-      child: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) => RestaurantItem(),
-      ),
-    ));
+          alignment: Alignment.centerLeft,
+          child: ListView.builder(
+            itemCount: restaurantList.length,
+            itemBuilder: (context, index) => RestaurantItem(restaurant: Restaurant.fromJson(restaurantList[index])),
+          ),
+        ));
   }
+
 }
 
 class RestaurantItem extends StatelessWidget {
+
+  final Restaurant restaurant;
+
   const RestaurantItem({
-    super.key,
+    super.key, required this.restaurant,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.only(left: 8, top: 3, right: 8, bottom: 3),
       child: Card(
         color: Colors.white,
         surfaceTintColor: Colors.white,
@@ -118,7 +139,7 @@ class RestaurantItem extends StatelessWidget {
               Container(
                 height: 120,
                 child: Image.network(
-                  "https://restaurant-api.dicoding.dev/images/medium/25",
+                  restaurant.picture,
                   width: 120,
                   fit: BoxFit.cover,
                 ),
@@ -134,16 +155,16 @@ class RestaurantItem extends StatelessWidget {
                         padding: EdgeInsets.only(
                             left: 4, top: 0, right: 0, bottom: 0),
                         child: Text(
-                          "Nama Resto",
-                          style: TextStyle(color: Colors.black, fontSize: 18),
+                          restaurant.name,
+                          style: TextStyle(color: Colors.black, fontSize: 20),
                         )),
                     Row(children: [
-                      new Icon(MdiIcons.googleMaps),
+                      new Icon(MdiIcons.googleMaps, color: Colors.red),
                       Padding(
                         padding: EdgeInsets.all(4),
                         child: Text(
-                          "Kota",
-                          style: TextStyle(color: Colors.black, fontSize: 18),
+                          restaurant.city,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       )
                     ]),
@@ -154,14 +175,14 @@ class RestaurantItem extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 0, top: 0, right: 0, bottom: 2),
-                          child: new Icon(MdiIcons.star),
+                          child: new Icon(MdiIcons.star, color: Colors.yellow,),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
                               left: 4, top: 0, right: 0, bottom: 0),
                           child: Text(
-                            "Rating",
-                            style: TextStyle(color: Colors.black, fontSize: 18),
+                            restaurant.rating,
+                            style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         )
                       ],
@@ -174,5 +195,25 @@ class RestaurantItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Restaurant {
+  Restaurant({required this.name, required this.city, required this.rating, required this.picture});
+
+  final String name;
+
+  final String city;
+
+  final String rating;
+
+  final String picture;
+
+  factory Restaurant.fromJson(Map<String, dynamic> data) {
+    final name = data['name'] as String;
+    final city = data['city'] as String;
+    final rating = (data['rating'] as num).toString();
+    final picture = data["pictureId"] as String;
+    return Restaurant(name: name, city: city, rating: rating, picture: picture);
   }
 }
