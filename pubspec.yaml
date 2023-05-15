@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   material_design_icons_flutter: 6.0.7096
+  http: 0.13.6
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/resto.json
+    - assets/image/food_placeholder.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

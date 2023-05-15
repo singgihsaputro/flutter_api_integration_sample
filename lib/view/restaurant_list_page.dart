@@ -16,9 +16,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(
+          title: const Text(
             "Kulineran",
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: Container(
@@ -40,7 +40,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                     ),
                   ),
                 ),
-                RestaurantList()
+                const RestaurantList()
               ],
             )));
   }

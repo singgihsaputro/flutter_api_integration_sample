@@ -5,11 +5,11 @@ import 'package:restaurant_app/view/restaurant_detail_page.dart';
 import '../model/restaurant.dart';
 
 class RestaurantItem extends StatelessWidget {
-
   final Restaurant restaurant;
 
   const RestaurantItem({
-    super.key, required this.restaurant,
+    super.key,
+    required this.restaurant,
   });
 
   @override
@@ -25,7 +25,9 @@ class RestaurantItem extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => RestaurantDetailPage(id: restaurant.id)),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      RestaurantDetailPage(restaurant: restaurant)),
             );
           },
           child: Row(
@@ -40,50 +42,31 @@ class RestaurantItem extends StatelessWidget {
               ),
               Expanded(
                   child: Container(
-                    height: 120,
-                    padding: EdgeInsets.all(6),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: 4, top: 0, right: 0, bottom: 0),
-                            child: Text(
-                              restaurant.name,
-                              style: TextStyle(color: Colors.black, fontSize: 20),
-                            )),
-                        Row(children: [
-                          new Icon(MdiIcons.googleMaps, color: Colors.red),
-                          Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
-                              restaurant.city,
-                              style: TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          )
-                        ]),
-                        Expanded(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 0, top: 0, right: 0, bottom: 2),
-                                  child: new Icon(MdiIcons.star, color: Colors.yellow,),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 4, top: 0, right: 0, bottom: 0),
-                                  child: Text(
-                                    restaurant.rating,
-                                    style: TextStyle(color: Colors.black, fontSize: 16),
-                                  ),
-                                )
-                              ],
-                            ))
-                      ],
-                    ),
-                  )),
+                height: 120,
+                padding: EdgeInsets.all(6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(
+                            left: 4, top: 0, right: 0, bottom: 0),
+                        child: Text(
+                          restaurant.name,
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        )),
+                    Row(children: [
+                      const Icon(MdiIcons.googleMaps, color: Colors.red),
+                      Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Text(
+                          restaurant.city,
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
+                      )
+                    ]),
+                  ],
+                ),
+              )),
             ],
           ),
         ),
