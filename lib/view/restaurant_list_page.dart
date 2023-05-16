@@ -2,14 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../widget/restaurant_list.dart';
 
-class RestaurantListPage extends StatefulWidget {
+class RestaurantListPage extends StatelessWidget {
   const RestaurantListPage({super.key});
-
-  @override
-  State<RestaurantListPage> createState() => _RestaurantListPageState();
-}
-
-class _RestaurantListPageState extends State<RestaurantListPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +20,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
                   child: Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.centerLeft,
                     child: const Padding(
                       padding: EdgeInsets.all(6),
